@@ -64,8 +64,8 @@ window.addEventListener("mousemove", (e) => {
       ctx.moveTo(e.touches[0].clientX, e.touches[0].clientY);
 	     if(prevX == null || prevY == null || !draw){
 	        // Set the previous mouse positions to the current mouse positions
-	        prevX = e.clientX
-	        prevY = e.clientY
+	        prevX = e.touches[0].clientX
+	        prevY = e.touches[0].clientY
 	        return
 	    } 
 

@@ -56,6 +56,39 @@ window.addEventListener("mousemove", (e) => {
     // initially previous mouse positions are null
     // so we can't draw a line
     // if draw is false then we won't draw
+
+
+
+
+    if (e.type == 'touchmove'){
+      ctx.moveTo(e.touches[0].clientX, e.touches[0].clientY);
+	     if(prevX == null || prevY == null || !draw){
+	        // Set the previous mouse positions to the current mouse positions
+	        prevX = e.clientX
+	        prevY = e.clientY
+	        return
+	    } 
+
+	    // Current mouse position
+	    let currentX = e.touches[0].clientX
+	    let currentY = e.touches[0].clientY
+
+    } else if (e.type == 'mousemove'){
+	    if(prevX == null || prevY == null || !draw){
+	        // Set the previous mouse positions to the current mouse positions
+	        prevX = e.clientX
+	        prevY = e.clientY
+	        return
+	    } 
+
+	    // Current mouse position
+	    let currentX = e.clientX
+	    let currentY = e.clientY
+    }
+
+
+
+
     if(prevX == null || prevY == null || !draw){
         // Set the previous mouse positions to the current mouse positions
         prevX = e.clientX

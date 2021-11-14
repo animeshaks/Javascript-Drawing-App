@@ -22,9 +22,9 @@ let clrs = document.querySelectorAll(".clr")
 clrs = Array.from(clrs)
 
 clrs.forEach(clr => {
-    clr.addEventListener("click", () => {
-        ctx.strokeStyle = clr.dataset.clr
-    })
+	clr.addEventListener("click", () => {
+		ctx.strokeStyle = clr.dataset.clr
+	})
 })
 
 let clearBtn = document.querySelector(".clear")
@@ -36,9 +36,9 @@ clearBtn.addEventListener("click", () => {
 // Saving drawing as image
 let saveBtn = document.querySelector(".save")
 saveBtn.addEventListener("click", () => {
-    let data = canvas.toDataURL("imag/png")
-    let a = document.createElement("a")
-    a.href = data
+	let data = canvas.toDataURL("imag/png")
+	let a = document.createElement("a")
+	a.href = data
     // what ever name you specify here
     // the image will be saved as that name
     a.download = "sketch.png"
@@ -50,55 +50,24 @@ window.addEventListener("mousedown", (e) => draw = true)
 // Set draw to false when mouse is released
 window.addEventListener("mouseup", (e) => draw = false)
 
-
+//For Touch Screen Devices
+window.addEventListener("touchstart", (e) => draw = true)
+window.addEventListener("touchend", (e) => draw = false)
 
 window.addEventListener("mousemove", (e) => {
     // initially previous mouse positions are null
     // so we can't draw a line
     // if draw is false then we won't draw
-
-
-
-
-    if (e.type == 'touchmove'){
-      ctx.moveTo(e.touches[0].clientX, e.touches[0].clientY);
-	     if(prevX == null || prevY == null || !draw){
-	        // Set the previous mouse positions to the current mouse positions
-	        prevX = e.touches[0].clientX
-	        prevY = e.touches[0].clientY
-	        return
-	    } 
-
-	    // Current mouse position
-	    let currentX = e.touches[0].clientX
-	    let currentY = e.touches[0].clientY
-
-    } else if (e.type == 'mousemove'){
-	    if(prevX == null || prevY == null || !draw){
-	        // Set the previous mouse positions to the current mouse positions
-	        prevX = e.clientX
-	        prevY = e.clientY
-	        return
-	    } 
-
-	    // Current mouse position
-	    let currentX = e.clientX
-	    let currentY = e.clientY
-    }
-
-
-
-
     if(prevX == null || prevY == null || !draw){
-        // Set the previous mouse positions to the current mouse positions
-        prevX = e.clientX
-        prevY = e.clientY
-        return
-    } 
+	    // Set the previous mouse positions to the current mouse positions
+	    prevX = e.clientX
+	    prevY = e.clientY
+	    return
+	} 
 
-    // Current mouse position
-    let currentX = e.clientX
-    let currentY = e.clientY
+	// Current mouse position
+	let currentX = e.clientX
+	let currentY = e.clientY
 
     // Drawing a line from the previous mouse position to the current mouse position
     ctx.beginPath()
@@ -107,6 +76,25 @@ window.addEventListener("mousemove", (e) => {
     ctx.stroke()
 
     // Update previous mouse position
+    prevX = currentX
+    prevY = currentY
+})
+
+window.addEventListener("touchmove", (e) => {
+    ctx.moveTo(e.touches[0].clientX, e.touches[0].clientY);
+    if(prevX == null || prevY == null || !draw){
+	    prevX = e.touches[0].clientX
+	    prevY = e.touches[0].clientY
+	    return
+	} 
+	let currentX = e.touches[0].clientX
+	let currentY = e.touches[0].clientY
+
+    ctx.beginPath()
+    ctx.moveTo(prevX, prevY)
+    ctx.lineTo(currentX, currentY)
+    ctx.stroke()
+
     prevX = currentX
     prevY = currentY
 })
